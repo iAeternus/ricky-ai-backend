@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ricky-ai-postgres
+    environment:
+      POSTGRES_DB: ricky_ai
+      POSTGRES_USER: ricky
+      POSTGRES_PASSWORD: ricky_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./ricky_ai.sql:/docker-entrypoint-initdb.d/ricky_ai.sql:ro
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: ricky-ai-redis
+    ports:
+      - "6379:6379"
+    command: [ "redis-server", "--appendonly", "yes" ]
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:

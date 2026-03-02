@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: ricky-ai-backend
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+  r2dbc:
+    url: ${R2DBC_URL:r2dbc:postgresql://127.0.0.1:5432/ricky_ai}
+    username: ${DB_USER:ricky}
+    password: ${DB_PASSWORD:ricky_pass}
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    url: ${FLYWAY_URL:jdbc:postgresql://127.0.0.1:5432/ricky_ai}
+    user: ${DB_USER:ricky}
+    password: ${DB_PASSWORD:ricky_pass}
+    locations: classpath:db/migration
+
+security:
+  jwt:
+    secret: change-me-to-32-bytes-minimum-secret
+    access-token-ttl: 30m
+    refresh-token-ttl: 7d
+    issuer: ricky-ai
+  rate-limit:
+    enabled: true
+    limit: 60
+    window: 1m
+
+file:
+  upload:
+    dir: uploads
+    max-size-bytes: 10485760
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api/docs
+  swagger-ui:
+    enabled: true
+    path: /api/swagger
