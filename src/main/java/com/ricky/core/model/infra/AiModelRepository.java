@@ -1,6 +1,6 @@
 package com.ricky.core.model.infra;
 
-import com.ricky.core.ai.config.AiModelConfig;
+import com.ricky.core.model.domain.AiModel;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -8,33 +8,26 @@ import reactor.core.publisher.Mono;
 @Repository
 public class AiModelRepository {
     private final AiModelR2dbcRepository repository;
-    private final AiModelMapper mapper;
+    private final AiModelConverter converter;
 
-    public AiModelRepository(AiModelR2dbcRepository repository, AiModelMapper mapper) {
+    public AiModelRepository(AiModelR2dbcRepository repository, AiModelConverter converter) {
         this.repository = repository;
-        this.mapper = mapper;
+        this.converter = converter;
     }
 
-    public Flux<AiModelConfig> findAll() {
-        return repository.findAll().map(mapper::toConfig);
+    public Flux<AiModel> findAll() {
+        return repository.findAll().map(converter::toDomain);
     }
 
-    public Mono<AiModelConfig> findById(Long id) {
-        return repository.findById(id).map(mapper::toConfig);
+    public Mono<AiModel> findById(Long id) {
+        return repository.findById(id).map(converter::toDomain);
     }
 
-    public Mono<AiModelConfig> save(AiModelConfig config) {
-        return repository.save(mapper.toEntity(config)).map(mapper::toConfig);
+    public Mono<AiModel> save(AiModel model) {
+        return repository.save(converter.toEntity(model)).map(converter::toDomain);
     }
 
-    public Mono<AiModelConfig> update(Long id, AiModelConfig config) {
-        return repository.findById(id)
-                .flatMap(existing -> {
-                    AiModelEntity entity = mapper.toEntity(config);
-                    entity.setId(id);
-                    entity.setCreatedAt(existing.getCreatedAt());
-                    entity.setUpdatedAt(java.time.Instant.now());
-                    return repository.save(entity).map(mapper::toConfig);
-                });
+    public Mono<AiModel> update(AiModel model) {
+        return repository.save(converter.toEntity(model)).map(converter::toDomain);
     }
 }

@@ -8,13 +8,15 @@ import reactor.core.publisher.Mono;
 @Component
 public class AiModelConfigResolverImpl implements AiModelConfigResolver {
     private final AiModelRepository repository;
+    private final AiModelConfigConverter configConverter;
 
-    public AiModelConfigResolverImpl(AiModelRepository repository) {
+    public AiModelConfigResolverImpl(AiModelRepository repository, AiModelConfigConverter configConverter) {
         this.repository = repository;
+        this.configConverter = configConverter;
     }
 
     @Override
     public Mono<AiModelConfig> resolveById(Long modelId) {
-        return repository.findById(modelId);
+        return repository.findById(modelId).map(configConverter::toConfig);
     }
 }

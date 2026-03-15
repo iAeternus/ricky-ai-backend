@@ -32,6 +32,61 @@ public class AiModel {
     @NonNull
     private final Instant updatedAt;
 
+    public static AiModel createNew(
+            String name,
+            ProviderType providerType,
+            ProtocolType protocolType,
+            String baseUrl,
+            String apiKey,
+            String modelName,
+            Integer priority,
+            Map<String, Object> extraConfig
+    ) {
+        Instant now = Instant.now();
+        return new AiModel(
+                null,
+                name,
+                providerType,
+                protocolType,
+                baseUrl,
+                apiKey,
+                modelName,
+                ModelStatus.ENABLED,
+                priority == null ? 100 : priority,
+                extraConfig,
+                now,
+                now
+        );
+    }
+
+    public AiModel update(
+            String name,
+            ProviderType providerType,
+            ProtocolType protocolType,
+            String baseUrl,
+            String apiKey,
+            String modelName,
+            Boolean enabled,
+            Integer priority,
+            Map<String, Object> extraConfig
+    ) {
+        ModelStatus nextStatus = enabled == null ? status : (enabled ? ModelStatus.ENABLED : ModelStatus.DISABLED);
+        return new AiModel(
+                id,
+                name,
+                providerType,
+                protocolType,
+                baseUrl,
+                apiKey,
+                modelName,
+                nextStatus,
+                priority == null ? this.priority : priority,
+                extraConfig,
+                createdAt,
+                Instant.now()
+        );
+    }
+
     public AiModel withStatus(ModelStatus newStatus) {
         return new AiModel(
                 id,

@@ -1,8 +1,9 @@
 package com.ricky.core.model.service.impl;
 
-import com.ricky.core.ai.config.AiModelConfig;
 import com.ricky.common.exception.BizException;
 import com.ricky.common.exception.ErrorCode;
+import com.ricky.core.model.domain.AiModel;
+import com.ricky.core.model.domain.ModelStatus;
 import com.ricky.core.model.dto.req.AiModelCreateRequest;
 import com.ricky.core.model.dto.resp.AiModelResponse;
 import com.ricky.core.model.dto.req.AiModelUpdateRequest;
@@ -37,55 +38,49 @@ public class ModelAppServiceImpl implements ModelAppService {
 
     @Override
     public Mono<AiModelResponse> create(AiModelCreateRequest request) {
-        return repository.save(fromCreate(request)).map(this::toResponse);
+        AiModel model = AiModel.createNew(
+                request.name(),
+                request.providerType(),
+                request.protocolType(),
+                request.baseUrl(),
+                request.apiKey(),
+                request.modelName(),
+                request.priority(),
+                request.extraConfig()
+        );
+        return repository.save(model).map(this::toResponse);
     }
 
     @Override
     public Mono<AiModelResponse> update(Long id, AiModelUpdateRequest request) {
         return repository.findById(id)
                 .switchIfEmpty(Mono.error(new BizException(ErrorCode.MODEL_NOT_FOUND)))
-                .flatMap(existing -> repository.update(id, fromUpdate(request)).map(this::toResponse));
+                .map(existing -> existing.update(
+                        request.name(),
+                        request.providerType(),
+                        request.protocolType(),
+                        request.baseUrl(),
+                        request.apiKey(),
+                        request.modelName(),
+                        request.enabled(),
+                        request.priority(),
+                        request.extraConfig()
+                ))
+                .flatMap(repository::update)
+                .map(this::toResponse);
     }
 
-    private AiModelConfig fromCreate(AiModelCreateRequest request) {
-        return AiModelConfig.builder()
-                .name(request.name())
-                .providerType(request.providerType())
-                .protocolType(request.protocolType())
-                .baseUrl(request.baseUrl())
-                .apiKey(request.apiKey())
-                .modelName(request.modelName())
-                .enabled(true)
-                .priority(request.priority() == null ? 100 : request.priority())
-                .extraConfig(request.extraConfig())
-                .build();
-    }
-
-    private AiModelConfig fromUpdate(AiModelUpdateRequest request) {
-        return AiModelConfig.builder()
-                .name(request.name())
-                .providerType(request.providerType())
-                .protocolType(request.protocolType())
-                .baseUrl(request.baseUrl())
-                .apiKey(request.apiKey())
-                .modelName(request.modelName())
-                .enabled(request.enabled() == null || request.enabled())
-                .priority(request.priority() == null ? 100 : request.priority())
-                .extraConfig(request.extraConfig())
-                .build();
-    }
-
-    private AiModelResponse toResponse(AiModelConfig config) {
+    private AiModelResponse toResponse(AiModel model) {
         return new AiModelResponse(
-                config.getId(),
-                config.getName(),
-                config.getProviderType(),
-                config.getProtocolType(),
-                config.getBaseUrl(),
-                config.getModelName(),
-                config.isEnabled(),
-                config.getPriority(),
-                config.getExtraConfig()
+                model.getId(),
+                model.getName(),
+                model.getProviderType(),
+                model.getProtocolType(),
+                model.getBaseUrl(),
+                model.getModelName(),
+                model.getStatus() == ModelStatus.ENABLED,
+                model.getPriority(),
+                model.getExtraConfig()
         );
     }
 }
