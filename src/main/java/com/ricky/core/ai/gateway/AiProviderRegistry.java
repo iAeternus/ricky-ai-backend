@@ -1,7 +1,7 @@
 package com.ricky.core.ai.gateway;
 
 import com.ricky.core.ai.provider.AiProvider;
-import com.ricky.core.model.domain.model.ProviderType;
+import com.ricky.core.model.domain.ProviderType;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;

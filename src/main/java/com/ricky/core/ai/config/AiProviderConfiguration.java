@@ -7,7 +7,7 @@ import com.ricky.core.ai.protocol.OpenAiProtocolAdapter;
 import com.ricky.core.ai.provider.DeepSeekProvider;
 import com.ricky.core.ai.provider.OllamaProvider;
 import com.ricky.core.ai.provider.OpenAiProvider;
-import com.ricky.core.model.domain.model.ProviderType;
+import com.ricky.core.model.domain.ProviderType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;

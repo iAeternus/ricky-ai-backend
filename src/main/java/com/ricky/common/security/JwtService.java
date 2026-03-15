@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class JwtService {
@@ -46,6 +47,7 @@ public class JwtService {
                 .setIssuer(properties.getIssuer())
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(exp))
+                .setId(UUID.randomUUID().toString())
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }

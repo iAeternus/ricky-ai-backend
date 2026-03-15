@@ -1,4 +1,4 @@
-package com.ricky.core.model.domain.model;
+package com.ricky.core.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

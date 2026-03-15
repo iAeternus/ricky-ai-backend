@@ -1,7 +1,7 @@
 package com.ricky.core.ai.config;
 
-import com.ricky.core.model.domain.model.ProtocolType;
-import com.ricky.core.model.domain.model.ProviderType;
+import com.ricky.core.model.domain.ProtocolType;
+import com.ricky.core.model.domain.ProviderType;
 import lombok.Builder;
 import lombok.Value;
 

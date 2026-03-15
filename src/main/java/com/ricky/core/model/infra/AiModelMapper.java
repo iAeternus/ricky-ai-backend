@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.r2dbc.postgresql.codec.Json;
 import com.ricky.core.ai.config.AiModelConfig;
-import com.ricky.core.model.domain.model.ProtocolType;
-import com.ricky.core.model.domain.model.ProviderType;
+import com.ricky.core.model.domain.ProtocolType;
+import com.ricky.core.model.domain.ProviderType;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;

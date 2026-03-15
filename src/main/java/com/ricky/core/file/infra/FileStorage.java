@@ -1,4 +1,4 @@
-package com.ricky.core.file.infra.storage;
+package com.ricky.core.file.infra;
 
 import reactor.core.publisher.Mono;
 

@@ -1,4 +1,4 @@
-package com.ricky.core.model.domain.model;
+package com.ricky.core.model.domain;
 
 public enum ProtocolType {
     OPENAI_PROTOCOL,

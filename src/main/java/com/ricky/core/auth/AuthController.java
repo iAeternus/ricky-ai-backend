@@ -1,9 +1,9 @@
 package com.ricky.core.auth;
 
-import com.ricky.core.auth.application.AuthAppService;
-import com.ricky.core.auth.dto.LoginRequest;
-import com.ricky.core.auth.dto.RefreshRequest;
-import com.ricky.core.auth.dto.TokenResponse;
+import com.ricky.core.auth.service.AuthAppService;
+import com.ricky.core.auth.dto.req.LoginRequest;
+import com.ricky.core.auth.dto.req.RefreshRequest;
+import com.ricky.core.auth.dto.resp.TokenResponse;
 import com.ricky.common.api.ApiResponse;
 import com.ricky.core.user.dto.req.UserRegisterRequest;
 import jakarta.validation.Valid;

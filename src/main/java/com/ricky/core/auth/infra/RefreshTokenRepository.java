@@ -1,4 +1,4 @@
-package com.ricky.core.auth.infra.repo;
+package com.ricky.core.auth.infra;
 
 import com.ricky.core.auth.domain.RefreshToken;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.ricky.core.file.domain.model;
+package com.ricky.core.file.domain;
 
 public enum FileStatus {
     ACTIVE,

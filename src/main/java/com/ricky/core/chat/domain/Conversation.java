@@ -1,4 +1,4 @@
-package com.ricky.core.chat.domain.model;
+package com.ricky.core.chat.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

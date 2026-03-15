@@ -1,4 +1,4 @@
-package com.ricky.core.file.infra.storage;
+package com.ricky.core.file.infra;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
