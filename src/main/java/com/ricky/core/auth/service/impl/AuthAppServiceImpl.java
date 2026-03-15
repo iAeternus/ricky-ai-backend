@@ -12,7 +12,7 @@ import com.ricky.common.security.JwtService;
 import com.ricky.common.security.PasswordHasher;
 import com.ricky.common.security.SessionService;
 import com.ricky.core.user.domain.User;
-import com.ricky.core.user.infra.UserRepository;
+import com.ricky.core.user.infra.repo.UserRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 

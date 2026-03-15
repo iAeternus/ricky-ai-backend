@@ -5,7 +5,7 @@ import com.ricky.common.exception.ErrorCode;
 import com.ricky.core.user.domain.User;
 import com.ricky.core.user.dto.resp.UserProfileResponse;
 import com.ricky.core.user.dto.req.UserUpdateRequest;
-import com.ricky.core.user.infra.UserRepository;
+import com.ricky.core.user.infra.repo.UserRepository;
 import com.ricky.core.user.service.UserAppService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,18 +29,8 @@ public class UserAppAppServiceImpl implements UserAppService {
         return userRepository.findById(userId)
                 .switchIfEmpty(Mono.error(new BizException(ErrorCode.USER_NOT_FOUND)))
                 .flatMap(user -> {
-                    User updated = new User(
-                            user.getId(),
-                            user.getEmail(),
-                            user.getPasswordHash(),
-                            request.displayName(),
-                            user.getRole(),
-                            user.getStatus(),
-                            user.getLastLoginAt(),
-                            user.getCreatedAt(),
-                            java.time.Instant.now()
-                    );
-                    return userRepository.update(updated);
+                    user.changeDisplayName(request.displayName());
+                    return userRepository.update(user);
                 })
                 .map(this::toProfile);
     }

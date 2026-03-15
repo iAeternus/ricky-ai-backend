@@ -10,7 +10,9 @@ CREATE TABLE IF NOT EXISTS users
     status        VARCHAR(20)  NOT NULL DEFAULT 'ACTIVE',
     last_login_at TIMESTAMPTZ,
     created_at    TIMESTAMPTZ  NOT NULL DEFAULT now(),
-    updated_at    TIMESTAMPTZ  NOT NULL DEFAULT now()
+    updated_at    TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    created_by    BIGINT,
+    updated_by    BIGINT
 );
 
 CREATE INDEX IF NOT EXISTS idx_users_status ON users (status);
@@ -28,7 +30,9 @@ CREATE TABLE IF NOT EXISTS ai_models
     priority      INT          NOT NULL DEFAULT 100,
     extra_config  JSONB,
     created_at    TIMESTAMPTZ  NOT NULL DEFAULT now(),
-    updated_at    TIMESTAMPTZ  NOT NULL DEFAULT now()
+    updated_at    TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    created_by    BIGINT,
+    updated_by    BIGINT
 );
 
 CREATE INDEX IF NOT EXISTS idx_ai_models_enabled_priority ON ai_models (enabled, priority);
@@ -44,6 +48,8 @@ CREATE TABLE IF NOT EXISTS user_settings
     preferences      JSONB,
     created_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by       BIGINT,
+    updated_by       BIGINT,
     CONSTRAINT uk_user_settings_user UNIQUE (user_id)
 );
 
@@ -56,7 +62,9 @@ CREATE TABLE IF NOT EXISTS conversations
     pinned     BOOLEAN      NOT NULL DEFAULT FALSE,
     status     SMALLINT     NOT NULL DEFAULT 1,
     created_at TIMESTAMPTZ  NOT NULL DEFAULT now(),
-    updated_at TIMESTAMPTZ  NOT NULL DEFAULT now()
+    updated_at TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    created_by BIGINT,
+    updated_by BIGINT
 );
 
 CREATE INDEX IF NOT EXISTS idx_conversations_user ON conversations (user_id, created_at DESC);
@@ -71,7 +79,10 @@ CREATE TABLE IF NOT EXISTS messages
     content         TEXT        NOT NULL,
     token_count     INT,
     status          SMALLINT    NOT NULL DEFAULT 1,
-    created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    created_by      BIGINT,
+    updated_by      BIGINT
 );
 
 CREATE INDEX IF NOT EXISTS idx_messages_conversation ON messages (conversation_id, created_at);
@@ -87,7 +98,10 @@ CREATE TABLE IF NOT EXISTS files
     size_bytes      BIGINT       NOT NULL,
     storage_path    VARCHAR(500) NOT NULL,
     status          SMALLINT     NOT NULL DEFAULT 1,
-    created_at      TIMESTAMPTZ  NOT NULL DEFAULT now()
+    created_at      TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    updated_at      TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    created_by      BIGINT,
+    updated_by      BIGINT
 );
 
 CREATE INDEX IF NOT EXISTS idx_files_user ON files (user_id, created_at DESC);
@@ -100,7 +114,10 @@ CREATE TABLE IF NOT EXISTS refresh_tokens
     token      VARCHAR(512) NOT NULL UNIQUE,
     expires_at TIMESTAMPTZ  NOT NULL,
     revoked    BOOLEAN      NOT NULL DEFAULT FALSE,
-    created_at TIMESTAMPTZ  NOT NULL DEFAULT now()
+    created_at TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    created_by BIGINT,
+    updated_by BIGINT
 );
 
 CREATE INDEX IF NOT EXISTS idx_refresh_tokens_user ON refresh_tokens (user_id);

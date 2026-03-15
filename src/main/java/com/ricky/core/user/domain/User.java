@@ -6,23 +6,25 @@ import lombok.Getter;
 
 import java.time.Instant;
 
+import static com.ricky.common.utils.ValidationUtils.requireNonNull;
+
 @Getter
 @AllArgsConstructor
 public class User {
-    private final Long id;
+    private Long id;
     @NotNull
-    private final String email;
+    private String email;
     @NotNull
-    private final String passwordHash;
+    private String passwordHash;
     @NotNull
-    private final String displayName;
+    private String displayName;
     @NotNull
-    private final UserRole role;
+    private UserRole role;
     @NotNull
-    private final UserStatus status;
-    private final Instant lastLoginAt;
-    @NotNull
-    private final Instant createdAt;
-    @NotNull
-    private final Instant updatedAt;
+    private UserStatus status;
+    private Instant lastLoginAt;
+
+    public void changeDisplayName(String displayName) {
+        this.displayName = requireNonNull(displayName, "displayName");
+    }
 }
