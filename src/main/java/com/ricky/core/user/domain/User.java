@@ -3,7 +3,6 @@ package com.ricky.core.user.domain;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 
 import java.time.Instant;
 
