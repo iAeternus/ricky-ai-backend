@@ -5,6 +5,7 @@ import com.ricky.common.exception.ErrorCode;
 import com.ricky.file.dto.FileUploadResponse;
 import com.ricky.file.infra.storage.FileStorage;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -38,7 +39,7 @@ public class FileAppService {
     private static class ByteArrayCollector {
         private byte[] data = new byte[0];
 
-        ByteArrayCollector append(org.springframework.core.io.buffer.DataBuffer buffer) {
+        ByteArrayCollector append(DataBuffer buffer) {
             int readable = buffer.readableByteCount();
             byte[] bytes = new byte[readable];
             buffer.read(bytes);

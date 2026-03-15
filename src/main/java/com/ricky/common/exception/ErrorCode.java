@@ -1,7 +1,9 @@
 package com.ricky.common.exception;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum ErrorCode {
     BAD_REQUEST(1000, HttpStatus.BAD_REQUEST, "bad_request"),
     VALIDATION_FAILED(1001, HttpStatus.BAD_REQUEST, "validation_failed"),
@@ -31,15 +33,4 @@ public enum ErrorCode {
         this.message = message;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }
