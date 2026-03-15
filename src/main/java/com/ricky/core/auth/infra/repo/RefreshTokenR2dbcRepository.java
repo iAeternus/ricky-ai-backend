@@ -1,4 +1,4 @@
-package com.ricky.core.auth.infra;
+package com.ricky.core.auth.infra.repo;
 
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;

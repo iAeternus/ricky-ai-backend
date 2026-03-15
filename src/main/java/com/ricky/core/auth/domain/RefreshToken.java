@@ -3,7 +3,6 @@ package com.ricky.core.auth.domain;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 
 import java.time.Instant;
 
@@ -11,22 +10,20 @@ import java.time.Instant;
 @AllArgsConstructor
 public class RefreshToken {
 
-    private final Long id;
+    private Long id;
     @NotNull
-    private final Long userId;
+    private Long userId;
     @NotNull
-    private final String token;
+    private String token;
     @NotNull
-    private final Instant expiresAt;
-    private final boolean revoked;
-    @NotNull
-    private final Instant createdAt;
+    private Instant expiresAt;
+    private boolean revoked;
 
     public boolean isExpired(Instant now) {
         return expiresAt.isBefore(now) || expiresAt.equals(now);
     }
 
-    public RefreshToken revoke() {
-        return new RefreshToken(id, userId, token, expiresAt, true, createdAt);
+    public void revoke() {
+        this.revoked = true;
     }
 }

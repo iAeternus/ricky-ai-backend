@@ -1,6 +1,7 @@
-package com.ricky.core.model.infra;
+package com.ricky.core.model.infra.repo;
 
 import com.ricky.core.model.domain.AiModel;
+import com.ricky.core.model.infra.mapper.AiModelDataMapper;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -8,9 +9,9 @@ import reactor.core.publisher.Mono;
 @Repository
 public class AiModelRepository {
     private final AiModelR2dbcRepository repository;
-    private final AiModelConverter converter;
+    private final AiModelDataMapper converter;
 
-    public AiModelRepository(AiModelR2dbcRepository repository, AiModelConverter converter) {
+    public AiModelRepository(AiModelR2dbcRepository repository, AiModelDataMapper converter) {
         this.repository = repository;
         this.converter = converter;
     }
@@ -28,6 +29,10 @@ public class AiModelRepository {
     }
 
     public Mono<AiModel> update(AiModel model) {
-        return repository.save(converter.toEntity(model)).map(converter::toDomain);
+        return repository.findById(model.getId())
+                .flatMap(entity -> {
+                    converter.updateEntity(entity, model);
+                    return repository.save(entity).map(converter::toDomain);
+                });
     }
 }

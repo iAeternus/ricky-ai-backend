@@ -1,4 +1,4 @@
-package com.ricky.core.model.infra;
+package com.ricky.core.model.infra.repo;
 
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 

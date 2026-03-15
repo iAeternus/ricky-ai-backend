@@ -1,4 +1,4 @@
-package com.ricky.core.auth.infra;
+package com.ricky.core.auth.infra.repo;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

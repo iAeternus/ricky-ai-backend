@@ -1,4 +1,4 @@
-package com.ricky.core.model.infra;
+package com.ricky.core.model.infra.repo;
 
 import lombok.Data;
 import io.r2dbc.postgresql.codec.Json;

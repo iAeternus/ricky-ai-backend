@@ -3,7 +3,7 @@ package com.ricky.core.auth.service.impl;
 import com.ricky.core.auth.dto.req.LoginRequest;
 import com.ricky.core.auth.dto.req.RefreshRequest;
 import com.ricky.core.auth.dto.resp.TokenResponse;
-import com.ricky.core.auth.infra.RefreshTokenRepository;
+import com.ricky.core.auth.infra.repo.RefreshTokenRepository;
 import com.ricky.core.auth.service.AuthAppService;
 import com.ricky.common.exception.BizException;
 import com.ricky.common.exception.ErrorCode;

@@ -3,11 +3,12 @@ package com.ricky.core.model.service.impl;
 import com.ricky.common.exception.BizException;
 import com.ricky.common.exception.ErrorCode;
 import com.ricky.core.model.domain.AiModel;
+import com.ricky.core.model.domain.AiModelFactory;
 import com.ricky.core.model.domain.ModelStatus;
 import com.ricky.core.model.dto.req.AiModelCreateRequest;
 import com.ricky.core.model.dto.resp.AiModelResponse;
 import com.ricky.core.model.dto.req.AiModelUpdateRequest;
-import com.ricky.core.model.infra.AiModelRepository;
+import com.ricky.core.model.infra.repo.AiModelRepository;
 import com.ricky.core.model.service.ModelAppService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -17,9 +18,11 @@ import java.util.List;
 @Service
 public class ModelAppServiceImpl implements ModelAppService {
     private final AiModelRepository repository;
+    private final AiModelFactory modelFactory;
 
-    public ModelAppServiceImpl(AiModelRepository repository) {
+    public ModelAppServiceImpl(AiModelRepository repository, AiModelFactory modelFactory) {
         this.repository = repository;
+        this.modelFactory = modelFactory;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class ModelAppServiceImpl implements ModelAppService {
 
     @Override
     public Mono<AiModelResponse> create(AiModelCreateRequest request) {
-        AiModel model = AiModel.createNew(
+        AiModel model = modelFactory.create(
                 request.name(),
                 request.providerType(),
                 request.protocolType(),
@@ -55,18 +58,20 @@ public class ModelAppServiceImpl implements ModelAppService {
     public Mono<AiModelResponse> update(Long id, AiModelUpdateRequest request) {
         return repository.findById(id)
                 .switchIfEmpty(Mono.error(new BizException(ErrorCode.MODEL_NOT_FOUND)))
-                .map(existing -> existing.update(
-                        request.name(),
-                        request.providerType(),
-                        request.protocolType(),
-                        request.baseUrl(),
-                        request.apiKey(),
-                        request.modelName(),
-                        request.enabled(),
-                        request.priority(),
-                        request.extraConfig()
-                ))
-                .flatMap(repository::update)
+                .flatMap(existing -> {
+                    existing.applyUpdate(
+                            request.name(),
+                            request.providerType(),
+                            request.protocolType(),
+                            request.baseUrl(),
+                            request.apiKey(),
+                            request.modelName(),
+                            request.enabled(),
+                            request.priority(),
+                            request.extraConfig()
+                    );
+                    return repository.update(existing);
+                })
                 .map(this::toResponse);
     }
 
