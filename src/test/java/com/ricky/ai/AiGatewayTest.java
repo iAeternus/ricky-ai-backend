@@ -1,14 +1,14 @@
 package com.ricky.ai;
 
-import com.ricky.ai.config.AiModelConfig;
-import com.ricky.ai.config.AiModelConfigResolver;
-import com.ricky.ai.gateway.AiGateway;
-import com.ricky.ai.gateway.AiProviderRegistry;
-import com.ricky.ai.model.*;
-import com.ricky.ai.provider.AiProvider;
-import com.ricky.chat.domain.model.MessageRole;
-import com.ricky.model.domain.model.ProtocolType;
-import com.ricky.model.domain.model.ProviderType;
+import com.ricky.core.ai.config.AiModelConfig;
+import com.ricky.core.ai.config.AiModelConfigResolver;
+import com.ricky.core.ai.gateway.AiGateway;
+import com.ricky.core.ai.gateway.AiProviderRegistry;
+import com.ricky.core.ai.model.*;
+import com.ricky.core.ai.provider.AiProvider;
+import com.ricky.core.chat.domain.model.MessageRole;
+import com.ricky.core.model.domain.model.ProtocolType;
+import com.ricky.core.model.domain.model.ProviderType;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

@@ -1,8 +1,8 @@
 package com.ricky.file;
 
-import com.ricky.file.application.FileAppService;
-import com.ricky.file.dto.FileUploadResponse;
-import com.ricky.file.infra.storage.FileStorage;
+import com.ricky.core.file.application.FileAppService;
+import com.ricky.core.file.dto.FileUploadResponse;
+import com.ricky.core.file.infra.storage.FileStorage;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;

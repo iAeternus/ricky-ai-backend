@@ -1,6 +1,6 @@
 package com.ricky.chat;
 
-import com.ricky.chat.application.ChatStreamManager;
+import com.ricky.core.chat.application.ChatStreamManager;
 import org.junit.jupiter.api.Test;
 import reactor.test.StepVerifier;
 

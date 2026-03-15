@@ -1,14 +1,14 @@
 package com.ricky.chat;
 
-import com.ricky.ai.gateway.AiGateway;
-import com.ricky.ai.model.AiChunk;
-import com.ricky.ai.model.ChatRequest;
-import com.ricky.chat.application.ChatAppService;
-import com.ricky.chat.application.ChatStreamManager;
-import com.ricky.chat.domain.model.MessageRole;
-import com.ricky.chat.dto.ChatMessageDto;
-import com.ricky.chat.dto.ChatStreamRequest;
-import com.ricky.chat.dto.ChatStreamResponse;
+import com.ricky.core.ai.gateway.AiGateway;
+import com.ricky.core.ai.model.AiChunk;
+import com.ricky.core.ai.model.ChatRequest;
+import com.ricky.core.chat.application.ChatAppService;
+import com.ricky.core.chat.application.ChatStreamManager;
+import com.ricky.core.chat.domain.model.MessageRole;
+import com.ricky.core.chat.dto.ChatMessageDto;
+import com.ricky.core.chat.dto.ChatStreamRequest;
+import com.ricky.core.chat.dto.ChatStreamResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.codec.ServerSentEvent;
 import reactor.core.publisher.Flux;
