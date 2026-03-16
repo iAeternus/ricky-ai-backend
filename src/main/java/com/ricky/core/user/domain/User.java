@@ -1,8 +1,8 @@
 package com.ricky.core.user.domain;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.time.Instant;
 
@@ -12,15 +12,15 @@ import static com.ricky.common.utils.ValidationUtils.requireNonNull;
 @AllArgsConstructor
 public class User {
     private Long id;
-    @NotNull
+    @NonNull
     private String email;
-    @NotNull
+    @NonNull
     private String passwordHash;
-    @NotNull
+    @NonNull
     private String displayName;
-    @NotNull
+    @NonNull
     private UserRole role;
-    @NotNull
+    @NonNull
     private UserStatus status;
     private Instant lastLoginAt;
 
