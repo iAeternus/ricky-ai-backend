@@ -3,6 +3,7 @@ package com.ricky.core.file.infra.repo;
 import com.ricky.common.domain.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -12,6 +13,9 @@ import java.time.Instant;
 @Table("file_assets")
 @EqualsAndHashCode(callSuper = true)
 public class FileAssetEntity extends BaseEntity {
+
+    @Id
+    private Long id;
 
     @Column("user_id")
     private Long userId;
@@ -34,5 +38,11 @@ public class FileAssetEntity extends BaseEntity {
 
     @Column("created_at")
     private Instant createdAt;
+
+    @Column("created_by")
+    private Long createdBy;
+
+    @Column("updated_by")
+    private Long updatedBy;
 
 }

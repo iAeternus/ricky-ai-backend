@@ -4,27 +4,25 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.time.Instant;
+import static com.ricky.common.utils.ValidationUtils.requireNonNull;
 
 @Getter
 @AllArgsConstructor
 public class Message {
-    private final Long id;
+    private Long id;
     @NonNull
-    private final Long conversationId;
+    private Long conversationId;
     @NonNull
-    private final Long userId;
+    private Long userId;
     @NonNull
-    private final MessageRole role;
+    private MessageRole role;
     @NonNull
-    private final String content;
-    private final Integer tokenCount;
+    private String content;
+    private Integer tokenCount;
     @NonNull
-    private final MessageStatus status;
-    @NonNull
-    private final Instant createdAt;
+    private MessageStatus status;
 
-    public Message withStatus(MessageStatus newStatus) {
-        return new Message(id, conversationId, userId, role, content, tokenCount, newStatus, createdAt);
+    public void changeStatus(MessageStatus newStatus) {
+        this.status = requireNonNull(newStatus, "newStatus");
     }
 }

@@ -3,6 +3,7 @@ package com.ricky.core.chat.infra.repo;
 import com.ricky.common.domain.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -12,6 +13,9 @@ import java.time.Instant;
 @Table("conversations")
 @EqualsAndHashCode(callSuper = true)
 public class ConversationEntity extends BaseEntity {
+
+    @Id
+    private Long id;
 
     @Column("user_id")
     private Long userId;
@@ -30,5 +34,11 @@ public class ConversationEntity extends BaseEntity {
 
     @Column("updated_at")
     private Instant updatedAt;
+
+    @Column("created_by")
+    private Long createdBy;
+
+    @Column("updated_by")
+    private Long updatedBy;
 
 }

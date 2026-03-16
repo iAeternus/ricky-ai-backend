@@ -11,10 +11,6 @@ public interface UserDataMapper {
 
     @Mapping(target = "role", expression = "java(user.getRole().name())")
     @Mapping(target = "status", expression = "java(user.getStatus().name())")
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
     UserEntity toEntity(User user);
 
     @Mapping(target = "role", expression = "java(UserRole.valueOf(entity.getRole()))")
@@ -23,11 +19,7 @@ public interface UserDataMapper {
 
     @Mapping(target = "role", expression = "java(user.getRole().name())")
     @Mapping(target = "status", expression = "java(user.getStatus().name())")
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
     void update(@MappingTarget UserEntity entity, User user);
 
 }

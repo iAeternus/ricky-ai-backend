@@ -8,4 +8,9 @@ public record AiChunk(
         String model,
         Map<String, Object> metadata
 ) {
+
+    public Map<String, Object> getMetadata() {
+        return metadata == null ? Map.of() : metadata;
+    }
+
 }

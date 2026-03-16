@@ -3,7 +3,7 @@ package com.ricky.apitest.chat;
 import com.ricky.common.security.JwtService;
 import com.ricky.core.ai.gateway.AiGateway;
 import com.ricky.core.ai.model.AiChunk;
-import com.ricky.core.chat.dto.req.ChatMessageDto;
+import com.ricky.core.chat.dto.req.ChatMessageRequest;
 import com.ricky.core.chat.dto.req.ChatStreamRequest;
 import com.ricky.core.chat.domain.MessageRole;
 import org.junit.jupiter.api.Test;
@@ -48,7 +48,7 @@ class ChatControllerTest {
                 null,
                 1L,
                 null,
-                List.of(new ChatMessageDto(MessageRole.USER, "hi")),
+                List.of(new ChatMessageRequest(MessageRole.USER, "hi")),
                 null,
                 null,
                 Map.of()

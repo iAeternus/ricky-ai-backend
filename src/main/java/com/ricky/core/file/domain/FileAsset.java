@@ -4,38 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.time.Instant;
+import static com.ricky.common.utils.ValidationUtils.requireNonNull;
 
 @Getter
 @AllArgsConstructor
 public class FileAsset {
-    private final Long id;
+    private Long id;
     @NonNull
-    private final Long userId;
-    private final Long conversationId;
+    private Long userId;
+    private Long conversationId;
     @NonNull
-    private final String filename;
+    private String filename;
     @NonNull
-    private final String contentType;
-    private final long sizeBytes;
+    private String contentType;
+    private long sizeBytes;
     @NonNull
-    private final String storagePath;
+    private String storagePath;
     @NonNull
-    private final FileStatus status;
-    @NonNull
-    private final Instant createdAt;
+    private FileStatus status;
 
-    public FileAsset withStatus(FileStatus newStatus) {
-        return new FileAsset(
-                id,
-                userId,
-                conversationId,
-                filename,
-                contentType,
-                sizeBytes,
-                storagePath,
-                newStatus,
-                createdAt
-        );
+    public void changeStatus(FileStatus newStatus) {
+        this.status = requireNonNull(newStatus, "newStatus");
     }
 }

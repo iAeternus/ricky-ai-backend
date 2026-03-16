@@ -6,7 +6,7 @@ import com.ricky.core.ai.model.ChatRequest;
 import com.ricky.core.chat.service.ChatStreamManager;
 import com.ricky.core.chat.service.impl.ChatAppServiceImpl;
 import com.ricky.core.chat.domain.MessageRole;
-import com.ricky.core.chat.dto.req.ChatMessageDto;
+import com.ricky.core.chat.dto.req.ChatMessageRequest;
 import com.ricky.core.chat.dto.req.ChatStreamRequest;
 import com.ricky.core.chat.dto.resp.ChatStreamResponse;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ class ChatAppServiceTest {
                 "req-1",
                 1L,
                 2L,
-                List.of(new ChatMessageDto(MessageRole.USER, "hi")),
+                List.of(new ChatMessageRequest(MessageRole.USER, "hi")),
                 0.7,
                 100,
                 Map.of()

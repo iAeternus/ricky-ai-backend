@@ -10,18 +10,13 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface FileAssetDataMapper {
 
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "updatedBy", ignore = true)
     FileAssetEntity toEntity(FileAsset fileAsset);
 
     FileAsset toAggregateRoot(FileAssetEntity entity);
 
-    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "updatedBy", ignore = true)
     void update(@MappingTarget FileAssetEntity entity, FileAsset fileAsset);
 

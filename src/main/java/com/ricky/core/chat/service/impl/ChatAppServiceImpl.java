@@ -4,11 +4,12 @@ import com.ricky.core.ai.gateway.AiGateway;
 import com.ricky.core.ai.model.AiChunk;
 import com.ricky.core.ai.model.ChatMessage;
 import com.ricky.core.ai.model.ChatRequest;
-import com.ricky.core.chat.dto.req.ChatMessageDto;
+import com.ricky.core.chat.dto.req.ChatMessageRequest;
 import com.ricky.core.chat.dto.req.ChatStreamRequest;
 import com.ricky.core.chat.dto.resp.ChatStreamResponse;
 import com.ricky.core.chat.service.ChatAppService;
 import com.ricky.core.chat.service.ChatStreamManager;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -16,28 +17,23 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+
+import static com.ricky.common.utils.ValidationUtils.isNotBlank;
 
 @Service
+@RequiredArgsConstructor
 public class ChatAppServiceImpl implements ChatAppService {
     private static final Duration HEARTBEAT_INTERVAL = Duration.ofSeconds(10);
 
     private final AiGateway aiGateway;
     private final ChatStreamManager streamManager;
 
-    public ChatAppServiceImpl(AiGateway aiGateway, ChatStreamManager streamManager) {
-        this.aiGateway = aiGateway;
-        this.streamManager = streamManager;
-    }
-
     @Override
     public Flux<ServerSentEvent<ChatStreamResponse>> streamChat(ChatStreamRequest request) {
-        String requestId = request.requestId() == null || request.requestId().isBlank()
-                ? UUID.randomUUID().toString()
-                : request.requestId();
-
+        String requestId = request.getRequestId();
         Mono<Void> cancelSignal = streamManager.register(requestId);
 
         ChatRequest aiRequest = new ChatRequest(
@@ -81,7 +77,7 @@ public class ChatAppServiceImpl implements ChatAppService {
         return streamManager.cancel(requestId);
     }
 
-    private List<ChatMessage> toChatMessages(List<ChatMessageDto> messages) {
+    private List<ChatMessage> toChatMessages(List<ChatMessageRequest> messages) {
         if (messages == null) {
             return List.of();
         }
@@ -91,10 +87,8 @@ public class ChatAppServiceImpl implements ChatAppService {
     }
 
     private ChatStreamResponse toResponse(AiChunk chunk, String type, String error, String requestId) {
-        Map<String, Object> metadata = chunk.metadata() == null ? Map.of() : chunk.metadata();
-        Map<String, Object> merged = metadata.isEmpty()
-                ? Map.of("requestId", requestId)
-                : new java.util.HashMap<>(metadata);
+        Map<String, Object> metadata = chunk.getMetadata();
+        Map<String, Object> merged = new HashMap<>(metadata.isEmpty() ? Map.of("requestId", requestId) : new HashMap<>(metadata));
         if (!merged.containsKey("requestId")) {
             merged.put("requestId", requestId);
         }
@@ -105,11 +99,11 @@ public class ChatAppServiceImpl implements ChatAppService {
         if (ex == null) {
             return "unknown_error";
         }
-        if (ex.getMessage() != null && !ex.getMessage().isBlank()) {
+        if (isNotBlank(ex.getMessage())) {
             return ex.getMessage();
         }
         Throwable cause = ex.getCause();
-        if (cause != null && cause.getMessage() != null && !cause.getMessage().isBlank()) {
+        if (cause != null && isNotBlank(cause.getMessage())) {
             return cause.getMessage();
         }
         return ex.getClass().getSimpleName();
